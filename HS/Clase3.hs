@@ -25,10 +25,11 @@ tuplasDeContiguos :: [a] -> [(a,a)]
 tuplasDeContiguos [] = []
 tuplasDeContiguos [_] = []
 tuplasDeContiguos (x:y:xs) = (x,y) : tuplasDeContiguos (y:xs)
-
+{-
 isOrdenada :: Ord a => [a] -> Bool
 isOrdenada [] = True
 isOrdenada xs = all (\(x, y) -> x <= y) (tuplasDeContiguos xs)
+-}
 
 isOrdenada :: Ord a => [a] -> Bool
 isOrdenada [] = True
@@ -77,3 +78,32 @@ pertenece elemento (x:xs)
   | otherwise = pertenece elemento xs
 
 
+insert :: Ord a => a -> [a] -> [a]
+insert n [] = [n] 
+insert n (x:xs) | n > x = x : insert n xs
+                | otherwise = n:x:xs  
+
+-- isort [2,6,7,1,3]
+--   insert 2 isort [6,7,1,3] -- [1,2,3,6,7]
+--   insert 6 isort [7,1,3] -- [1,3,6,7]
+--   insert 7 isort [1,3] -- [1,3,7]
+--   insert 1 isort [3] -- [1,3]   
+--   insert 3 isort []  -- [3] 
+isort :: Ord a => [a] -> [a]
+isort [] = []
+isort (x:xs) = insert x (isort xs)
+
+-- [1,4,3] [2,5,6]
+
+merge :: Ord a => [a] -> [a] -> [a]
+merge [] xs = xs
+merge xs [] = xs
+merge (x:xs) (y:ys) | x <= y = [x] ++ merge xs (y:ys)
+                    | otherwise =  [y] ++ merge (x:xs) ys   
+
+msort :: Ord a => [a] -> [a]
+msort [] = []
+msort [x] = [x]  
+msort xs = merge (msort ys) (msort zs) 
+  where 
+    (ys, zs) = splitAt ((length xs) `div` 2) xs
