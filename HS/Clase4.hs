@@ -88,11 +88,11 @@ safeHead :: [a] -> Maybe a
 safeHead [] = Nothing
 safeHead xs = Just (head xs)
 
-data Nat = Zero | Suc Nat
-instance Show Nat where
-    show :: Nat -> String
-    show Zero = "Cero"
-    show (Suc n) = "Sucesor(" ++ show n ++ ")"
+data Nat = Zero | Suc Nat deriving Show
+-- instance Show Nat where
+--    show :: Nat -> String
+--    show Zero = "Cero"
+--    show (Suc n) = "Sucesor(" ++ show n ++ ")"
 
 nat2int :: Nat -> Int
 nat2int Zero = 0
@@ -100,9 +100,40 @@ nat2int (Suc n) = 1 + nat2int n
 int2nat :: Int -> Nat
 int2nat 0 = Zero
 int2nat n = Suc (int2nat (n-1))
+
+-- addNat (Suc(Suc(Suc(Zero))) (Suc(Suc(Zero)))   
+-- Suc (addNat Suc(Suc(Zero))  (Suc(Suc(Zero)))
+-- Suc (Suc addNat(Suc(Zero))  (Suc(Suc(Zero)))
+-- Suc (Suc (Suc (addnat Zero  (Suc(Suc(Zero)))
+-- Suc(Suc(Suc(Suc(Suc(Zero)))) 5
 addNat :: Nat -> Nat -> Nat
 addNat Zero n = n
 addNat (Suc m) n = Suc (addNat m n)
+
+-- multNat (Suc(Zero)) Zero
+--      multNat 1 0
+--      addNat 0 multNat 0 0 
+--      addNat 0 0 = 0
+-- multNat (Suc(Zero)) (Suc(Suc(Zero)))
+--      multNat 1 2 
+--      addNat 2 (multNat 0  2)
+--      addNat 2 0 = 2
+-- multNat (Suc(Suc(Zero)) (Suc(Suc(Zero))) 
+--      multNat 2 2
+--      addNat 2 (multNat 1 2)
+--      addNat 2 (addNat 2 (multNat 0 2))
+--      addNat 2 (addNat 2 0) = addNat 2 2 = 4
+-- multNat (Suc(Suc(Suc(Zero)) (Suc(Suc(Zero)))
+--     multNat 3 2
+--     addNat 2 (multNat 2 2)
+--     addNat 2 (addnat 2 (multNat 1 2))
+--     addNat 2 (addNat 2 (addNat 2 (multNat 0 2))) 
+--     addNat 2 (addNat 2 (addNat 2 (0)) = addNat 2 (addNat 2 2) = addNat 2 4 = 6
+multNat :: Nat -> Nat -> Nat
+multNat Zero _ = Zero
+multNat (Suc m) n = addNat n (multNat m n)
+
+
 
 -- Reescribir la siguiente expresión utilizando map y filter
 -- [f x | x <- xs , p x] --  f = (+2)   p = (>0) -- [-1,0,1] -- [3]
