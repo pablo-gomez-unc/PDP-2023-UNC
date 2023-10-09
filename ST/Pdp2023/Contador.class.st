@@ -5,14 +5,14 @@ Class {
 		'contador'
 	],
 	#classVars : [
-		'CantidadInstancias'
+		'Cantidad'
 	],
 	#category : #Pdp2023
 }
 
 { #category : #accessing }
 Contador class >> startingAt: anInteger [ 
-   cantidad := cantidad + 1.
+   Cantidad := Cantidad + 1.
 	^ self new contador: anInteger.
 ]
 
