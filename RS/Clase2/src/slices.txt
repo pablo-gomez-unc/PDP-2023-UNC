@@ -1,0 +1,27 @@
+fn first_word (s: &str) -> &str {
+    let bytes = s.as_bytes();
+    for (i,&value) in bytes.iter().enumerate() {
+        if value == b' ' {
+            return &s[0..i];
+        }
+    }
+    &s
+}
+
+fn main() {
+    let mut s = String::from("hello world");
+    let word = first_word(&s);
+    println!("{}", word);
+    
+    let word2 = first_word("hola mundo");
+    println!("{}", word2);
+
+    let cadena = "hallo mundo";
+    let word3 = first_word(&cadena[2..7]);
+    println!("{}", word3);
+
+    let mut s2 = String::from("hello world");
+    let word4 = first_word(&s2[2..7]);
+    println!("{}", word4);
+
+}
