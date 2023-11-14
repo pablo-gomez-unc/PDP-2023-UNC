@@ -1,0 +1,22 @@
+use std::fmt;
+
+struct Persona {
+    nombre: String,
+    edad: u32,
+}
+
+impl fmt::Display for Persona {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        write!(f, "Nombre: {}, Edad: {}", self.nombre, self.edad)
+    }
+}
+
+fn main() {
+    let persona = Persona {
+        nombre: String::from("Juan"),
+        edad: 30,
+    };
+
+    // Utilizando el método `fmt` para formatear la estructura Persona
+    println!("{}", persona);
+}

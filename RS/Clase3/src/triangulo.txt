@@ -1,0 +1,30 @@
+struct Triangulo {
+    lado_a : f64,
+    lado_b : f64,
+    lado_c : f64
+}
+
+impl Triangulo {
+    fn get_area (&self) -> f64 {
+        let s = (self.lado_a + self.lado_b + self.lado_c) / 2.0;
+        (s * (s - self.lado_a) * (s - self.lado_b) * (s - self.lado_c)).sqrt()
+    }
+
+    fn scale (&mut self, escala: f64) {
+        self.lado_a *= escala;
+        self.lado_b *= escala; 
+        self.lado_c *= escala; 
+    }
+    
+    fn new (lado_a: f64 , lado_b: f64, lado_c: f64) -> Triangulo {
+        Triangulo { lado_a, lado_b, lado_c }
+    }
+}
+
+fn triangulo_ejemplo () {
+    let mut triang = Triangulo::new(3.0, 4.0, 5.0);
+    assert_eq! (triang.get_area(), 6.0);
+    triang.scale (0.5);
+    assert_eq! (triang.get_area(), 1.5);
+    println! ("Todo ok!");
+}
